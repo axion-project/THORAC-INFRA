@@ -1,0 +1,22 @@
+environment: production
+nodes:
+  - name: node-alpha
+    host: 192.168.1.10
+    role: api
+    services:
+      - orac-api
+      - vector-db
+  - name: node-beta
+    host: 192.168.1.11
+    role: compute
+    services:
+      - orac-core
+      - embedding-engine
+
+secrets:
+  ORAC_API_KEY: ${ENV_ORAC_API_KEY}
+  DB_PASSWORD: ${ENV_DB_PASSWORD}
+
+deploy:
+  use_docker: true
+  compose_template: templates/docker-compose-template.yaml

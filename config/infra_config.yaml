@@ -20,3 +20,21 @@ secrets:
 deploy:
   use_docker: true
   compose_template: templates/docker-compose-template.yaml
+services:
+  orac-api:
+    image: aedin/orac-api:latest
+    ports:
+      - "8000:8000"
+    env:
+      ORAC_ENV: production
+      LOG_LEVEL: debug
+    volumes:
+      - ./data/orac:/app/data
+
+  vector-db:
+    image: qdrant/qdrant:latest
+    ports:
+      - "6333:6333"
+    env: {}
+    volumes:
+      - ./data/qdrant:/qdrant/storage

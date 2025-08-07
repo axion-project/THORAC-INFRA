@@ -1,0 +1,14 @@
+from jinja2 import Template
+
+def render_compose(service_config):
+    with open("templates/docker-compose-template.yaml", "r") as file:
+        template = Template(file.read())
+
+    return template.render(
+        service_name=service_config["name"],
+        image=service_config["image"],
+        container_name=service_config.get("container_name", service_config["name"]),
+        ports=service_config.get("ports", []),
+        env=service_config.get("env", {}),
+        volumes=service_config.get("volumes", [])
+    )

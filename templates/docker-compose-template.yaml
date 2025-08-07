@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  {{ service_name }}:
+    image: {{ image }}
+    container_name: {{ container_name }}
+    restart: unless-stopped
+    ports:
+      {% for port in ports %}
+      - "{{ port }}"
+      {% endfor %}
+    environment:
+      {% for key, value in env.items() %}
+      - {{ key }}={{ value }}
+      {% endfor %}
+    volumes:
+      {% for volume in volumes %}
+      - {{ volume }}
+      {% endfor %}
+    networks:
+      - thorac_net
+
+networks:
+  thorac_net:
+    driver: bridge
